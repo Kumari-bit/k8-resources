@@ -5,10 +5,10 @@ metadata:
   labels:
     purpose: service-np-demo
 spec:
-  type: Nodeport
+  type: NodePort
   selector:
     purpose: service-np-demo
-    project: robos
+    project: roboshop
     environment: dev
   ports:
     - protocol: TCP
@@ -18,10 +18,10 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: nginx-np
   labels:
     purpose: service-np-demo
-    project: robos
+    project: roboshop
     environment: dev
 spec:
   containers:
