@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sc-headless-svc #name we should give
-  labels:  # we should give
+  name: nginx-svc-headless
+  labels:
     purpose: statefulset
     project: roboshop
 spec:
@@ -10,39 +10,39 @@ spec:
   - port: 80
     name: web
   clusterIP: None
-  selector:  # we should give
+  selector:
     purpose: statefulset
     project: roboshop
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sc-normal-svc #name we should give
-  labels:  # we should give
+  name: nginx-svc-normal
+  labels:
     purpose: statefulset
     project: roboshop
 spec:
   ports:
   - port: 80
     name: web
-  selector:  # we should give
+  selector:
     purpose: statefulset
     project: roboshop
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: sc-headless # we give
+  name: nginx-statefulset
 spec:
   selector:
     matchLabels:
-      app: nginx # has to match .spec.template.metadata.labels
-  serviceName: "sc-headless-svc" # we should give and this should be headless service
+      purpose: statefulset
+      project: roboshop # has to match .spec.template.metadata.labels
+  serviceName: "nginx-svc-headless" # this should be headless service
   replicas: 3 # by default is 1
-  minReadySeconds: 10 # by default is 0
   template:
     metadata:
-      labels: # we should give and will maintain same labels in all
+      labels:
         purpose: statefulset
         project: roboshop # has to match .spec.selector.matchLabels
     spec:
@@ -52,13 +52,13 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
-  # this is nothing but pvc,you can directly create here
+  # This is nothing but PVC, you can directly create here
   volumeClaimTemplates:
   - metadata:
       name: www
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "roboshop-ebs" # we should give
+      storageClassName: "efs-roboshop"
       resources:
         requests:
           storage: 2Gi
