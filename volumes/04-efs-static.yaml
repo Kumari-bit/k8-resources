@@ -8,7 +8,7 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  storageClassName:  #This should be empty in static provisioning
+  storageClassName: ""     #This should be empty in static provisioning
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
@@ -55,7 +55,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    purpose: ebs-static-demo
+    purpose: efs-static-demo
     project: roboshop
   ports:
     - protocol: TCP
