@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-084d2d8329da39260   #volume manamu create chesina file system
+    volumeHandle: fs-0fd81f131a3b79339   #volume manamu create chesina file system
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
